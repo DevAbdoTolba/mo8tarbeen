@@ -2,14 +2,10 @@
 #include <iostream>
 
 Student::Student(const std::string& name, int id, const std::string& major)
-    : Person(name, id), major(major) {
-    // TODO: [Ahmed Fathi] needs to implement logic here.
-}
+    : Person(name, id), major(major) {}
 
-Student::~Student() {
-    // TODO: [Ahmed Fathi] needs to implement logic here.
-}
+Student::~Student() {}
 
 void Student::displayInfo() const {
-    // TODO: [Ahmed Fathi] needs to implement logic here.
+    cout<<"Student Name: " << name <<" - Student ID: " << id <<" - Major: " << major << endl;
 }
