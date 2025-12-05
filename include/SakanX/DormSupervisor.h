@@ -4,6 +4,8 @@
 #include "Student.h"
 #include "Admin.h"
 
+using namespace std;
+
 class DormSupervisor : public Student, public Admin {
 public:
     DormSupervisor(const std::string& name, int id, const std::string& major, const std::string& department);
