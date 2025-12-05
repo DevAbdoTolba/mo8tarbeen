@@ -1,9 +1,15 @@
+#include <iostream>
 #include "SakanX/Person.h"
 
-Person::Person(const std::string& name, int id) : name(name), id(id) {
-    // TODO: [Abdo Tolba] needs to implement logic here.
+using namespace std;
+
+Person::Person(const string& name, int id) : name(name), id(id) {
+    cout << "[Person Constructor] Created user: " << name << " (ID: " << id << ")" << endl;
 }
 
 Person::~Person() {
-    // TODO: [Abdo Tolba] needs to implement logic here.
+    cout << "[Person Destructor] Cleaning up user: " << name << endl;
 }
+
+
+int main(){return 0;}

@@ -1,17 +1,20 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include <iostream>
 #include <string>
+
+using namespace std;
 
 class Person {
 public:
-    Person(const std::string& name, int id);
+    Person(const string& name, int id);
     virtual ~Person();
 
     virtual void displayInfo() const = 0; // Pure virtual function
 
 protected:
-    std::string name;
+    string name;
     int id;
 };
 
