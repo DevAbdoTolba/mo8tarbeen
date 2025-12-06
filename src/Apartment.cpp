@@ -1,6 +1,8 @@
 #include "SakanX/Apartment.h"
 #include <iostream>
 
+using namespace std;
+
 Apartment::Apartment(const Location& location) : location(location) {
     // TODO: [Abdo Tolba] needs to implement logic here.
 }
@@ -10,7 +12,7 @@ Apartment::~Apartment() {
 }
 
 void Apartment::addStudent(Student* student) {
-    // TODO: [Abdo Tolba] needs to implement logic here.
+    
 }
 Student Apartment::removeStudent(Student* student){
     //
@@ -22,7 +24,28 @@ int Apartment::totalHarmonyScore(){
 
 
 void Apartment::displayApartmentInfo() const {
-    // TODO: [Abdo Tolba] needs to implement logic here.
+     cout << "Apartment Information:\n";
+     cout << "ID: " << id << "\n";
+     cout << "Area: " << apartmentArea << " sqm\n";
+     cout << "Capacity: " << capacity << "\n";
+     cout << "Location: ";
+    location.displayLocation(); // Assuming Location has this method
+
+     cout << "Good Botgaz: " << (goodBotgaz ? "Yes" : "No") << "\n";
+     cout << "WiFi Connection: " << (hasWifi ? "Available" : "Not Available") << "\n";
+     cout << "Had Rats Before: " << (hadRatsBefore ? "Yes" : "No") << "\n";
+
+     cout << "Rooms:\n";
+    for (const auto& room : rooms) {
+         cout << "  - " << room.first << ": " << room.second << " sqm\n";
+    }
+
+     cout << "Students:\n";
+    for (const auto& student : students) {
+        if (student) {
+            student->displayInfo(); // Assuming Student has this method
+        }
+    }
 }
 
 
@@ -50,17 +73,22 @@ Location Apartment::getLocation() const {
     return location;
 }
 
-const std::vector<Student*>& Apartment::getStudents() const {
+const  vector<Student*>& Apartment::getStudents() const {
     return students;
 }
 
-const std::vector<std::pair<std::string, int>>& Apartment::getRooms() const {
+const  vector< pair< string, int>>& Apartment::getRooms() const {
     return rooms;
 }
 
 int Apartment::getCapacity() const {
     return capacity;
 }
+
+int Apartment::getCurrentTenants() const{
+    return currentTenants;
+}
+
 
 void Apartment::setId(int id) {
     this->id = id;
@@ -86,14 +114,18 @@ void Apartment::setLocation(const Location& loc) {
     this->location = loc;
 }
 
-void Apartment::setStudents(const std::vector<Student*>& students) {
+void Apartment::setStudents(const vector<Student*>& students) {
     this->students = students;
 }
 
-void Apartment::setRooms(const std::vector<std::pair<std::string, int>>& rooms) {
+void Apartment::setRooms(const vector<pair<string, int>>& rooms) {
     this->rooms = rooms;
 }
 
 void Apartment::setCapacity(int capacity) {
     this->capacity = capacity;
+}
+
+void Apartment::setCurrentTenants(int currentTenants){
+    this->currentTenants = currentTenants;
 }

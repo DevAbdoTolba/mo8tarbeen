@@ -26,6 +26,7 @@ public:
     const std::vector<Student*>& getStudents() const;
     const std::vector<std::pair<std::string, int>>& getRooms() const;
     int getCapacity() const;
+    int getCurrentTenants() const;
 
     // Setters
     void setId(int id);
@@ -37,6 +38,7 @@ public:
     void setStudents(const std::vector<Student*>& students);
     void setRooms(const std::vector<std::pair<std::string, int>>& rooms);
     void setCapacity(int capacity);
+    void setCurrentTenants(int tenants);
 
 private:
 
@@ -53,10 +55,11 @@ private:
     bool hadRatsBefore;
 
     Location location;
-    std::vector<Student*> students;
-    std::vector<std::pair<std::string, int>> rooms; // vector of pair of < room type, number of these rooms> 
+    vector<Student*> students;
+    vector<std::pair<std::string, int>> rooms; // vector of pair of < room type, number of these rooms> 
 
     int capacity; // how many can be living in this apartment
+    int currentTenants;
 
 };
 
