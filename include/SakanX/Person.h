@@ -20,6 +20,7 @@ public:
 
     Person(const string& name, int id);
     Person(const string& name, int id, const string& ssn, int age);
+    Person(const string& name, int id, int age, NationalityType nationality, const string& ssn, const vector<pair<string, string>>& contacts, char gender);
     Person(const string& name, int id, const string& ssn, int age, NationalityType nationality, const vector<pair<string, string>>& contacts);
     Person(const string& name, int id, const string& ssn, int age, char gender, NationalityType nationality, const vector<pair<string, string>>& contacts);
     virtual ~Person();
