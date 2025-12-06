@@ -38,7 +38,7 @@ public:
     void setStudents(const std::vector<Student*>& students);
     void setRooms(const std::vector<std::pair<std::string, int>>& rooms);
     void setCapacity(int capacity);
-    void setCurrentTenants(int tenants);
+    void setCurrentTenants(int currentTenants);
 
 private:
 
