@@ -16,7 +16,27 @@ public:
 
     void displayApartmentInfo() const;
 
+    // Getters
+    int getId() const;
+    int getApartmentArea() const;
+    bool isGoodBotgaz() const;
+    bool hasWifiConnection() const;
+    bool hadRats() const;
+    Location getLocation() const;
+    const std::vector<Student*>& getStudents() const;
+    const std::vector<std::pair<std::string, int>>& getRooms() const;
+    int getCapacity() const;
 
+    // Setters
+    void setId(int id);
+    void setApartmentArea(int area);
+    void setGoodBotgaz(bool value);
+    void setHasWifi(bool value);
+    void setHadRatsBefore(bool value);
+    void setLocation(const Location& loc);
+    void setStudents(const std::vector<Student*>& students);
+    void setRooms(const std::vector<std::pair<std::string, int>>& rooms);
+    void setCapacity(int capacity);
 
 private:
 
