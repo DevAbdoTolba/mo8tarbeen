@@ -105,6 +105,10 @@ int Apartment::getCurrentTenants() const{
     return currentTenants;
 }
 
+int Apartment::getRentPrice() const{
+    return rentPrice;
+}
+
 
 void Apartment::setId(int id) {
     this->id = id;
@@ -144,4 +148,8 @@ void Apartment::setCapacity(int capacity) {
 
 void Apartment::setCurrentTenants(int currentTenants){
     this->currentTenants = currentTenants;
+}
+
+void Apartment::setRentPrice(int rentPrice){
+    this->rentPrice = rentPrice;
 }
