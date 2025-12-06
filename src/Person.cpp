@@ -11,6 +11,20 @@ using namespace std;
 Person::Person(const string& name, int id) : name(name), id(id) {
     cout << "[Person Constructor] Created user: " << name << " (ID: " << id << ")" << endl;
 }
+Person::Person(const string& name, int id, const string& ssn, int age)
+    : name(name), id(id), ssn(ssn), age(age) {
+    cout << "[Person Constructor] Created user: " << name << " (ID: " << id << ", SSN: " << ssn << ", Age: " << age << ")" << endl;
+}
+
+Person::Person(const string& name, int id, const string& ssn, int age, NationalityType nationality, const vector<pair<string, string>>& contacts)
+    : name(name), id(id), ssn(ssn), age(age), nationality(nationality), contacts(contacts) {
+    cout << "[Person Constructor] Created user: " << name << " (ID: " << id << ", SSN: " << ssn << ", Age: " << age << ", Nationality: " << static_cast<int>(nationality) << ", Contacts: " << contacts.size() << ")" << endl;
+}
+
+Person::Person(const string& name, int id, const string& ssn, int age, char gender, NationalityType nationality, const vector<pair<string, string>>& contacts)
+    : name(name), id(id), ssn(ssn), age(age), gender(gender), nationality(nationality), contacts(contacts) {
+    cout << "[Person Constructor] Created user: " << name << " (ID: " << id << ", SSN: " << ssn << ", Age: " << age << ", Gender: " << gender << ", Nationality: " << static_cast<int>(nationality) << ", Contacts: " << contacts.size() << ")" << endl;
+}
 
 
 void Person::sayJoke(){

@@ -19,6 +19,9 @@ class Person {
 public:
 
     Person(const string& name, int id);
+    Person(const string& name, int id, const string& ssn, int age);
+    Person(const string& name, int id, const string& ssn, int age, NationalityType nationality, const vector<pair<string, string>>& contacts);
+    Person(const string& name, int id, const string& ssn, int age, char gender, NationalityType nationality, const vector<pair<string, string>>& contacts);
     virtual ~Person();
 
     // Pure virtual function
