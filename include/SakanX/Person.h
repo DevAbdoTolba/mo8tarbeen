@@ -27,6 +27,7 @@ public:
 
     // Pure virtual function
     virtual void sayJoke();
+    virtual void displayInfo() const = 0;
 
 
 
