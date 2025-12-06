@@ -1,15 +1,24 @@
-#include "SakanX/Location.h"
 #include <iostream>
+//#include "Location.h"
+//
+using namespace std;
 
-Location::Location(const std::string& building, int floor, int roomNumber)
-    : building(building), floor(floor), roomNumber(roomNumber) {
-    // TODO: [Ahmed Samir] needs to implement logic here.
-}
+class Location{
+    private:
+        string building;
+        int floor;
+        int roomNumber;
+    public:
+        Location(string buidling , int floor , int roomNumber){
+            this->roomNumber = roomNumber;
+            this->floor = floor;
+            this->building = buidling;
+        }
 
-Location::~Location() {
-    // TODO: [Ahmed Samir] needs to implement logic here.
-}
-
-void Location::displayLocation() const {
-    // TODO: [Ahmed Samir] needs to implement logic here.
-}
+        void diplayLocation(){
+            cout<< building
+                << " , Floor : "<<floor
+                <<" , RoomNumber : "<<roomNumber
+                <<endl;
+        }
+};
