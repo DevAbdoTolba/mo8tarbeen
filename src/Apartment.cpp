@@ -12,14 +12,30 @@ Apartment::~Apartment() {
 }
 
 void Apartment::addStudent(Student* student) {
-    
+    if(currentTenants == capacity) throw "Maximum Capacity has reached";
+    students.push_back(student);
+    cout << "Student has been added successfully, Student number: " << ++currentTenants << endl; 
+    if(currentTenants == capacity) cout << "WARNING! MAXIMUM CAPACITY HAS REACHED" << endl;
+    else if(capacity - currentTenants == 1) cout << "There is only one more place ready for rent"; 
+    else cout << "There is " << capacity - currentTenants << " more places ready for rent!";
 }
 Student Apartment::removeStudent(Student* student){
-    //
+    if(currentTenants == 0) throw "Apartment is already empty lol";
+
+    auto it = find_if(students.begin(), students.end(), [&](Student* s) {
+        return s && s->getId() == student->getId();
+    });
+
+    if (it == students.end()) throw "Student not found in apartment";
+    Student* removedStudent = *it;
+    students.erase(it);
+    --currentTenants;
+    cout << "Student removed successfully, available space now: " << capacity - currentTenants << endl;
+    return *removedStudent;
 }
 
 int Apartment::totalHarmonyScore(){
-    //
+    
 }
 
 
