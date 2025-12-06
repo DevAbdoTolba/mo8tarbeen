@@ -7,6 +7,8 @@
 #include <ctime>
 #include <iostream>
 
+using namespace std;
+
 
 //  ENUM CLASS
 enum class PolulationType{
@@ -54,42 +56,41 @@ public:
              double hosp_km, double coll_km, double prices);
 
     // Public Method Declaration
-    void diplayLocation();
+    void displayLocation() const;
+    string Location_get_population_type_string() ;
 
     // GETTERS ////
     // for the variables declared inside of the class
-    const std::string& getBuilding() const { return building; }
-    int getFloor() const { return floor; }
-    int getRoomNumber() const { return roomNumber; }
-    PolulationType getPopulationType() const { return population_type; }
+    const std::string& getBuilding() const ;
+    int getFloor() const ;
+    int getRoomNumber() const ;
+    PolulationType getPopulationType() const ;
         // the struct getters
-        double getLongitude() const { return lm.longitude; }
-        double getAltitude() const { return lm.altitude; }
-        double getNearestSupermarketM() const { return lm.nearest_supermarket_m; }
-        double getNearestPharmacyM() const { return lm.nearest_pharmacy_m; }
-        double getNearestMosqueM() const { return lm.nearest_mosque_m; }
-        double getNearestTransitStopM() const { return lm.nearest_transit_stop_m; }
-        double getNearestHospitalKM() const { return lm.nearest_hospital_km; }
-        double getNearestCollegeKM() const { return lm.nearest_college_km; }
-        double getMedianPrices() const { return lm.median_prices; }
+        double getLongitude() const ;
+        double getAltitude() const ;
+        double getNearestSupermarketM() const ;
+        double getNearestPharmacyM() const ;
+        double getNearestMosqueM() const ;
+        double getNearestTransitStopM() const ;
+        double getNearestHospitalKM() const ;
+        double getNearestCollegeKM() const ;
+        double getMedianPrices() const ;
 
     // SETTERS ///
     // for the variables ceclared inside of the class
-    void setBuilding(std::string newBuilding) { building = std::move(newBuilding); }
-    void setFloor(int newFloor) { floor = newFloor; }
-    void setRoomNumber(int newRoomNumber) { roomNumber = newRoomNumber; }
-    void setPopulationType(PolulationType newPopType) { population_type = newPopType; }
-        // the struct setters and in case of admin set values for the longitude and latitude
-        // then the defaulut values will be updated
-        void setLongitude(double val) { lm.longitude = val; }
-        void setAltitude(double val) { lm.altitude = val; }
-        void setNearestSupermarketM(double val) { lm.nearest_supermarket_m = val; }
-        void setNearestPharmacyM(double val) { lm.nearest_pharmacy_m = val; }
-        void setNearestMosqueM(double val) { lm.nearest_mosque_m = val; }
-        void setNearestTransitStopM(double val) { lm.nearest_transit_stop_m = val; }
-        void setNearestHospitalKM(double val) { lm.nearest_hospital_km = val; }
-        void setNearestCollegeKM(double val) { lm.nearest_college_km = val; }
-        void setMedianPrices(double val) { lm.median_prices = val; }
+    void setBuilding(const std::string& newBuilding);
+    void setFloor(int newFloor);
+    void setRoomNumber(int newRoomNumber);
+    void setPopulationType(PolulationType newPopType);
+    void setLongitude(double val);
+    void setAltitude(double val);
+    void setNearestSupermarketM(double val);
+    void setNearestPharmacyM(double val);
+    void setNearestMosqueM(double val);
+    void setNearestTransitStopM(double val);
+    void setNearestHospitalKM(double val);
+    void setNearestCollegeKM(double val);
+    void setMedianPrices(double val);
     ~Location(){} // destructor
 };
 

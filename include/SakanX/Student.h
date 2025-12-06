@@ -10,8 +10,8 @@ using namespace std;
 class Student : public virtual Person {
 public:
     static vector<Tag*> availableTags; // Static member for all possible tags
-    Student(const string& name, int id, int age, NationalityType nationality, string ssn="", 
-                vector<pair<string, string>> contacts, char gender, const string& major, double tolerance);
+    Student(const string& name, int id, int age, NationalityType nationality, string ssn = "", 
+            vector<pair<string, string>> contacts = {}, char gender = 'm', const string& major = "", double tolerance = 0.0);
     ~Student();
 
     void displayInfo() const override;
@@ -20,11 +20,11 @@ public:
     void removeTag(Tag* tag);
     bool findTag(Tag* tag);
     void clearTags();
-    const set<Tag*>& Student::getTags() const;
-    
+    const set<Tag*>& getTags() const;
+
     string getMajor() const;
     void setMajor(const string& major);
-    double getTolerance();
+    double getTolerance() const;
     void setTolerance(double level);
 
     void cleanupTags();

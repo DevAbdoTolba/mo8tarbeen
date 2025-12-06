@@ -3,11 +3,10 @@
 
 using namespace std;
 
-Student::Student(const string& name, int id, int age, NationalityType nationality, string ssn="", 
+Student::Student(const string& name, int id, int age, NationalityType nationality, string ssn, 
     vector<pair<string, string>> contacts, char gender, const string& major, double tolerance)
     :Person(name, id, age, nationality, ssn, contacts, gender), major(major), toleranceLevel(tolerance){}
 Student::~Student() {
-    Person::~Person();
     this->clearTags();
 }
 string Student::getMajor() const{
@@ -16,7 +15,7 @@ string Student::getMajor() const{
 void Student::setMajor(const string& major){
     this->major = major;
 }
-double Student::getTolerance(){
+double Student::getTolerance() const {
     return toleranceLevel;
 }
 void Student::setTolerance(double level){
@@ -47,10 +46,8 @@ const set<Tag*>& Student::getTags() const {
 void Student::clearTags() {
     tags.clear();
 }
-double Student::getTolerance() {
-    return toleranceLevel;
-}
-void cleanupTags(){
+// ...existing code...
+void Student::cleanupTags(){
     for(Tag* tag : Student::availableTags) {
         delete tag;
     }

@@ -4,13 +4,13 @@
 
 #include <iostream>
 #include <cassert>
-#include "Person.h"
-#include "Student.h"
-#include "Admin.h"
-#include "DormSupervisor.h"
-#include "Location.h"
-#include "Apartment.h"
-#include "SmartMatchAI.h"
+#include "SakanX/Person.h"
+#include "SakanX/Student.h"
+#include "SakanX/Admin.h"
+#include "SakanX/DormSupervisor.h"
+#include "SakanX/Location.h"
+#include "SakanX/Apartment.h"
+#include "SakanX/SmartMatchAI.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ public:
 
     static void testStudentLogic() {
         cout << "[TEST] Student Logic... ";
-        Student s("Ali", 101, "CS");
+        Student s("Ali", 101, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
         // Verify Virtual Inheritance doesn't crash
         assert(true); 
         cout << "PASSED" << endl;
@@ -38,16 +38,16 @@ public:
 
     static void testComposition() {
         cout << "[TEST] Composition (Apartment owns Location)... ";
-        Apartment* apt = new Apartment(Location("Building A", 3, 305));
+        Apartment* apt = new Apartment(Location("Building A", 3, 305, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
         delete apt; // Should trigger Location destructor
         cout << "PASSED (Check console for Location destructor msg)" << endl;
     }
 
     static void testAggregation() {
         cout << "[TEST] Aggregation (Apartment references Student)... ";
-        Student* s = new Student("Survivor", 500, "Eng");
+        Student* s = new Student("Survivor", 500, 18, NationalityType::Egyptian, "", {}, 'm', "Eng", 0.0);
         {
-            Apartment apt(Location("B", 1, 1));
+            Apartment apt(Location("B", 1, 1, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
             apt.addStudent(s);
         } // Apartment dies here
         
@@ -58,8 +58,8 @@ public:
 
     static void testAI() {
         cout << "[TEST] AI Logic... ";
-        Student s1("A", 1, "CS");
-        Student s2("B", 2, "CS");
+        Student s1("A", 1, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
+        Student s2("B", 2, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
         double score = SmartMatchAI::calculateHarmony(s1, s2);
         assert(score > 0); // Should match because same major
         cout << "Score: " << score << " PASSED" << endl;
