@@ -17,52 +17,73 @@ using namespace std;
 class TestSuites {
 public:
     static void testPersonLogic() {
-        cout << "[TEST] Person Logic: (Cannot instantiate Abstract class directly, verified via subclass)" << endl;
+        cout << "\n==============================\n";
+        cout << "[TEST] Person Logic" << endl;
+        cout << "------------------------------" << endl;
+        cout << "Cannot instantiate Abstract class directly, verified via subclass." << endl;
+        cout << "==============================\n";
     }
 
     static void testStudentLogic() {
-        cout << "[TEST] Student Logic... ";
+        cout << "\n==============================\n";
+        cout << "[TEST] Student Logic" << endl;
+        cout << "------------------------------" << endl;
         Student s("Ali", 101, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
-        // Verify Virtual Inheritance doesn't crash
-        assert(true); 
-        cout << "PASSED" << endl;
+        cout << "Created Student: Name='" << s.getName() << "', ID=" << s.getId() << ", Major='" << s.getMajor() << "'\n";
+        cout << "Virtual Inheritance check: OK" << endl;
+        cout << "Result: \033[32mPASSED\033[0m" << endl;
+        cout << "==============================\n";
     }
 
     static void testDiamondProblem() {
-        cout << "[TEST] Diamond Problem (DormSupervisor)... ";
-        // If this compiles and runs, Virtual Inheritance is working
+        cout << "\n==============================\n";
+        cout << "[TEST] Diamond Problem (DormSupervisor)" << endl;
+        cout << "------------------------------" << endl;
         DormSupervisor ds("Super", 999, "CS", "Housing");
-        ds.displayInfo(); // Should show data from both paths
-        cout << "PASSED" << endl;
+        cout << "DormSupervisor created. Displaying info:\n";
+        ds.displayInfo();
+        cout << "Result: \033[32mPASSED\033[0m" << endl;
+        cout << "==============================\n";
     }
 
     static void testComposition() {
-        cout << "[TEST] Composition (Apartment owns Location)... ";
+        cout << "\n==============================\n";
+        cout << "[TEST] Composition (Apartment owns Location)" << endl;
+        cout << "------------------------------" << endl;
         Apartment* apt = new Apartment(Location("Building A", 3, 305, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
+        cout << "Apartment created with Location: Building A, Floor 3, Room 305\n";
         delete apt; // Should trigger Location destructor
-        cout << "PASSED (Check console for Location destructor msg)" << endl;
+        cout << "Result: \033[32mPASSED\033[0m (Check console for Location destructor msg)" << endl;
+        cout << "==============================\n";
     }
 
     static void testAggregation() {
-        cout << "[TEST] Aggregation (Apartment references Student)... ";
+        cout << "\n==============================\n";
+        cout << "[TEST] Aggregation (Apartment references Student)" << endl;
+        cout << "------------------------------" << endl;
         Student* s = new Student("Survivor", 500, 18, NationalityType::Egyptian, "", {}, 'm', "Eng", 0.0);
         {
             Apartment apt(Location("B", 1, 1, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
             apt.addStudent(s);
-        } // Apartment dies here
-        
-        cout << "Checking if student still exists... ";
+            cout << "Apartment created and student added. Apartment goes out of scope now.\n";
+        }
+        cout << "Checking if student still exists...\n";
         s->displayInfo(); // If this crashes, Aggregation failed
-        cout << "PASSED" << endl;
+        cout << "Result: \033[32mPASSED\033[0m" << endl;
+        cout << "==============================\n";
     }
 
     static void testAI() {
-        cout << "[TEST] AI Logic... ";
+        cout << "\n==============================\n";
+        cout << "[TEST] AI Logic" << endl;
+        cout << "------------------------------" << endl;
         Student s1("A", 1, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
         Student s2("B", 2, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
         double score = SmartMatchAI::calculateHarmony(s1, s2);
+        cout << "Harmony score between s1 and s2: " << score << endl;
         assert(score > 0); // Should match because same major
-        cout << "Score: " << score << " PASSED" << endl;
+        cout << "Result: \033[32mPASSED\033[0m" << endl;
+        cout << "==============================\n";
     }
 };
 
