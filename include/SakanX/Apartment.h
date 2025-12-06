@@ -27,6 +27,7 @@ public:
     const std::vector<std::pair<std::string, int>>& getRooms() const;
     int getCapacity() const;
     int getCurrentTenants() const;
+    int getRentPrice() const;
 
     // Setters
     void setId(int id);
@@ -39,6 +40,7 @@ public:
     void setRooms(const std::vector<std::pair<std::string, int>>& rooms);
     void setCapacity(int capacity);
     void setCurrentTenants(int currentTenants);
+    void setRentPrice(int rentPrice);
 
 private:
 
@@ -60,6 +62,8 @@ private:
 
     int capacity; // how many can be living in this apartment
     int currentTenants;
+
+    int rentPrice;
 
 };
 
