@@ -10,6 +10,3 @@ Person::Person(const string& name, int id) : name(name), id(id) {
 Person::~Person() {
     cout << "[Person Destructor] Cleaning up user: " << name << endl;
 }
-
-
-int main(){return 0;}
