@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <limits>
+#include <algorithm>
 #include "Student.h"
 #include "Apartment.h"
 #include "DormSupervisor.h"
@@ -23,11 +25,9 @@ using namespace std;
 
 class CLI {
 private:
-    // The "Database"
+    // Database
     vector<Student*> students;
     vector<Apartment*> apartments;
-    
-    // We keep one supervisor to act as the "System Admin" logic handler
     DormSupervisor* supervisor; 
 
     // --- UI Helpers ---
@@ -35,7 +35,18 @@ private:
     void printHeader(const string& title) const;
     void printLine() const;
     void waitForInput() const;
-    void printProgressBar(double percentage) const; // For that sweet AI visualization
+    void printProgressBar(double percentage) const; 
+
+    // --- Input Helpers (Robustness) ---
+    int inputInt(const string& prompt);
+    double inputDouble(const string& prompt);
+    string inputString(const string& prompt);
+    bool getYesNo(const string& prompt);
+
+    // --- Validation Helpers ---
+    bool isStudentIdUnique(int id) const;
+    bool isApartmentIdUnique(int id) const;
+    bool isStudentInApartment(Student* s, Apartment* a) const;
 
     // --- Menu Flows ---
     void menuManageStudents();
@@ -44,18 +55,24 @@ private:
     
     // --- Actions ---
     void actionAddStudent();
+    void actionManageTags(Student* s); // NEW: Dedicated Tag Editor
+    void actionViewStudentDetails();
+    
     void actionAddApartment();
     void actionAssignStudent();
-    void actionViewDetails();
+    void actionApartmentDetails();
 
     // Helper to find objects
     Student* selectStudent(const string& prompt);
     Apartment* selectApartment(const string& prompt);
 
+    // Seed Data
+    void seedData();
+
 public:
     CLI();
     ~CLI();
-    void run(); // The main loop
+    void run(); 
 };
 
 #endif // CLI_H
