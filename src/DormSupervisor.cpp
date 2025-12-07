@@ -93,6 +93,43 @@ Apartment *DormSupervisor::findCheapestApartment(const vector<Apartment *> &apar
     }
     return cheapest;
 }
+
+
+HousingStats DormSupervisor::generateReport(const vector<Apartment *> &apartments) const {
+    HousingStats stats = {0.0, 0.0, 0.0, 0, 0, 0, 0};
+    
+    stats.totalApartments = apartments.size();
+
+    for (const auto* apt : apartments) {
+        // 1. Financials
+        int tenants = apt->getCurrentTenants();
+        int cap = apt->getCapacity();
+        double price = apt->getRentPrice();
+
+        stats.currentTenants += tenants;
+        stats.totalCapacity += cap;
+        stats.totalRevenue += (tenants * price);
+        
+        // Potential: Revenue + (Empty Beds * Price)
+        stats.potentialRevenue += (cap * price); 
+
+        // 2. Maintenance Checks
+        // If it had rats before or bad botgaz, flag it for review
+        if (apt->hadRats() || !apt->isGoodBotgaz()) {
+            stats.maintenanceIssues++;
+        }
+    }
+
+    // 3. Occupancy Rate Calculation
+    if (stats.totalCapacity > 0) {
+        stats.occupancyRate = (static_cast<double>(stats.currentTenants) / stats.totalCapacity) * 100.0;
+    }
+
+    return stats;
+}
+
+
+
 DormSupervisor::~DormSupervisor() {}
 
 void DormSupervisor::displayInfo() const

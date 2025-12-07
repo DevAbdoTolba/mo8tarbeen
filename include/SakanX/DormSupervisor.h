@@ -8,6 +8,17 @@
 
 using namespace std;
 
+// A container for all our statistics
+struct HousingStats {
+    double totalRevenue;
+    double potentialRevenue; // If all empty beds were sold
+    double occupancyRate;    // Percentage
+    int totalCapacity;
+    int currentTenants;
+    int totalApartments;
+    int maintenanceIssues;   // Count of apartments with Rats or Bad Botgaz
+};
+
 class DormSupervisor : public Student, public Admin
 {
 public:
@@ -23,6 +34,8 @@ public:
     int countFullApartments(const vector<Apartment *> &apartments) const;
     Apartment *findApartmentByStudent(Student *student, const vector<Apartment *> &apartments) const;
     Apartment *findCheapestApartment(const vector<Apartment *> &apartments) const;
+    HousingStats generateReport(const vector<Apartment *> &apartments) const;
+  
     ~DormSupervisor();
 
     void displayInfo() const override;
