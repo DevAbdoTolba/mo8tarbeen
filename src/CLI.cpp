@@ -170,13 +170,7 @@ void CLI::run() {
             case 1: menuManageStudents(); break;
             case 2: menuManageApartments(); break;
             case 3: menuSmartMatch(); break;
-            case 4: 
-                printHeader("STATISTICS");
-                supervisor->calculateTotalRevenue(apartments);
-                cout << "Empty Apartments: " << supervisor->countEmptyApartments(apartments) << endl;
-                cout << "Full Apartments: " << supervisor->countFullApartments(apartments) << endl;
-                waitForInput();
-                break;
+            case 4: actionShowStats(); break;   
             case 0: running = false; break;
             default: cout << RED << "Invalid selection!" << RESET << endl; waitForInput();
         }
@@ -500,4 +494,67 @@ Apartment* CLI::selectApartment(const string& prompt) {
     cout << RED << "Apartment ID not found." << RESET << endl;
     waitForInput();
     return nullptr;
+}
+
+void CLI::actionShowStats() {
+    printHeader("SUPERVISOR DASHBOARD");
+
+    // 1. Get Data from Backend
+    HousingStats stats = supervisor->generateReport(apartments);
+
+    // 2. Calculate Visuals
+    // Occupancy Bar
+    string occupancyColor = (stats.occupancyRate >= 80) ? GREEN : (stats.occupancyRate >= 50 ? YELLOW : RED);
+    
+    // Revenue Health (Actual vs Potential)
+    double revHealth = (stats.potentialRevenue > 0) ? (stats.totalRevenue / stats.potentialRevenue) * 100.0 : 0;
+    string revColor = (revHealth >= 90) ? GREEN : (revHealth >= 60 ? YELLOW : RED);
+
+    // 3. Draw The Dashboard (Zen Layout)
+    
+    cout << BOLD << "  OVERVIEW" << RESET << endl;
+    printLine();
+    
+    // Row 1: Occupancy & Capacity
+    cout << std::left << std::setw(30) << "OCCUPANCY RATE" << std::setw(30) << "TENANT COUNT" << endl;
+    
+    // Draw Progress Bar for Occupancy
+    cout << "[";
+    int bars = (int)(stats.occupancyRate / 5); // 20 bars total
+    for(int i=0; i<20; i++) {
+        if(i < bars) cout << occupancyColor << "|" << RESET;
+        else cout << " ";
+    }
+    cout << "] " << (int)stats.occupancyRate << "%      ";
+    
+    cout << BOLD << stats.currentTenants << RESET << " / " << stats.totalCapacity << " Students" << endl;
+    cout << endl;
+
+    // Row 2: Financials
+    cout << std::left << std::setw(30) << "MONTHLY REVENUE" << std::setw(30) << "POTENTIAL REVENUE" << endl;
+    cout << revColor << stats.totalRevenue << " EGP" << RESET << std::string(18, ' ') 
+         << stats.potentialRevenue << " EGP" << endl;
+    
+    if(stats.potentialRevenue > stats.totalRevenue) {
+        cout << YELLOW << "(Missed Opp: " << (stats.potentialRevenue - stats.totalRevenue) << " EGP)" << RESET << endl;
+    }
+    cout << endl;
+
+    printLine();
+    
+    // Row 3: Maintenance & Alerts
+    cout << BOLD << "  ALERTS & ACTIONS" << RESET << endl;
+    if(stats.maintenanceIssues > 0) {
+        cout << RED << "[!] " << stats.maintenanceIssues << " Apartments flagged for maintenance (Rats/Gas)." << RESET << endl;
+    } else {
+        cout << GREEN << "[OK] No critical maintenance issues reported." << RESET << endl;
+    }
+
+    if(stats.occupancyRate > 95) {
+        cout << YELLOW << "[!] Dorms are nearly full. Consider adding new apartments." << RESET << endl;
+    } else if (stats.occupancyRate < 30) {
+        cout << BLUE << "[i] Occupancy low. Consider running marketing campaigns." << RESET << endl;
+    }
+
+    waitForInput();
 }
