@@ -7,3 +7,6 @@ Tag::~Tag() {}
 int Tag::getValue() const {
     return value;
 }
+string Tag::getName() const {
+    return name;
+}

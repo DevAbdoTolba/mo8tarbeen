@@ -5,7 +5,11 @@ using namespace std;
 
 Student::Student(const string& name, int id, int age, NationalityType nationality, string ssn, 
     vector<pair<string, string>> contacts, char gender, const string& major, double tolerance)
-    :Person(name, id, age, nationality, ssn, contacts, gender), major(major), toleranceLevel(tolerance){}
+    :Person(name, id, age, nationality, ssn, contacts, gender), major(major), toleranceLevel(tolerance){
+    if (name.empty() || id < 0 || age < 0 || major.empty() || tolerance < 0) {
+        throw std::invalid_argument("Invalid Student constructor arguments");
+    }
+}
 Student::~Student() {
     this->clearTags();
 }
@@ -13,16 +17,18 @@ string Student::getMajor() const{
     return major;
 }
 void Student::setMajor(const string& major){
+    if (major.empty()) throw std::invalid_argument("Major cannot be empty");
     this->major = major;
 }
 double Student::getTolerance() const {
     return toleranceLevel;
 }
 void Student::setTolerance(double level){
+    if (level < 0) throw std::invalid_argument("Tolerance level must be non-negative");
     toleranceLevel = level;
 }
 void Student::displayInfo() const {
-    cout<<"Student Name: " << name <<" - Student ID: " << id <<" - Major: " << major << endl;
+    // No output as per requirements
 }
 int Student::calculateTotalTagValue() const {
     int total = 0;

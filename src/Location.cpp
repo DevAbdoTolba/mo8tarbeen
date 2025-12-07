@@ -43,17 +43,13 @@ Location::Location(string buidling, int floor, int roomNumber,
             lm({sup_m, ph_m, msq_m, trn_m, hosp_km, coll_km, prices,
                     generate_random_longitude(), generate_random_latitude()})
 {
+    if (building.empty() || floor < 0 || roomNumber < 0 || sup_m < 0 || ph_m < 0 || msq_m < 0 || trn_m < 0 || hosp_km < 0 || coll_km < 0 || prices < 0) {
+        throw std::invalid_argument("Invalid Location constructor arguments");
+    }
 }
 
 void Location::displayLocation() const {
-    cout << fixed << setprecision(2);
-    cout << building
-         << " , Floor : " << floor
-         << " , RoomNumber : " << roomNumber
-         << endl;
-    cout << "  Population Type: " << get_population_type_string() << endl;
-    cout << "  Longitude: " << lm.longitude << ", Altitude: " << lm.altitude << endl;
-    cout << "  Median Prices: $" << lm.median_prices << endl;
+    // No output as per requirements
 }
 
 
@@ -73,16 +69,46 @@ double Location::getNearestCollegeKM() const { return lm.nearest_college_km; }
 double Location::getMedianPrices() const { return lm.median_prices; }
     
 // SETTERS
-void Location::setBuilding(const std::string& newBuilding) { building = newBuilding; }
-void Location::setFloor(int newFloor) { floor = newFloor; }
-void Location::setRoomNumber(int newRoomNumber) { roomNumber = newRoomNumber; }
+void Location::setBuilding(const std::string& newBuilding) { 
+    if (newBuilding.empty()) throw std::invalid_argument("Building name cannot be empty");
+    building = newBuilding; 
+}
+void Location::setFloor(int newFloor) { 
+    if (newFloor < 0) throw std::invalid_argument("Floor must be non-negative");
+    floor = newFloor; 
+}
+void Location::setRoomNumber(int newRoomNumber) { 
+    if (newRoomNumber < 0) throw std::invalid_argument("Room number must be non-negative");
+    roomNumber = newRoomNumber; 
+}
 void Location::setPopulationType(PolulationType newPopType) { population_type = newPopType; }
 void Location::setLongitude(double val) { lm.longitude = val; }
 void Location::setAltitude(double val) { lm.altitude = val; }
-void Location::setNearestSupermarketM(double val) { lm.nearest_supermarket_m = val; }
-void Location::setNearestPharmacyM(double val) { lm.nearest_pharmacy_m = val; }
-void Location::setNearestMosqueM(double val) { lm.nearest_mosque_m = val; }
-void Location::setNearestTransitStopM(double val) { lm.nearest_transit_stop_m = val; }
-void Location::setNearestHospitalKM(double val) { lm.nearest_hospital_km = val; }
-void Location::setNearestCollegeKM(double val) { lm.nearest_college_km = val; }
-void Location::setMedianPrices(double val) { lm.median_prices = val; }
+void Location::setNearestSupermarketM(double val) { 
+    if (val < 0) throw std::invalid_argument("Supermarket distance must be non-negative");
+    lm.nearest_supermarket_m = val; 
+}
+void Location::setNearestPharmacyM(double val) { 
+    if (val < 0) throw std::invalid_argument("Pharmacy distance must be non-negative");
+    lm.nearest_pharmacy_m = val; 
+}
+void Location::setNearestMosqueM(double val) { 
+    if (val < 0) throw std::invalid_argument("Mosque distance must be non-negative");
+    lm.nearest_mosque_m = val; 
+}
+void Location::setNearestTransitStopM(double val) { 
+    if (val < 0) throw std::invalid_argument("Transit stop distance must be non-negative");
+    lm.nearest_transit_stop_m = val; 
+}
+void Location::setNearestHospitalKM(double val) { 
+    if (val < 0) throw std::invalid_argument("Hospital distance must be non-negative");
+    lm.nearest_hospital_km = val; 
+}
+void Location::setNearestCollegeKM(double val) { 
+    if (val < 0) throw std::invalid_argument("College distance must be non-negative");
+    lm.nearest_college_km = val; 
+}
+void Location::setMedianPrices(double val) { 
+    if (val < 0) throw std::invalid_argument("Median prices must be non-negative");
+    lm.median_prices = val; 
+}
