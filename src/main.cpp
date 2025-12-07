@@ -6,8 +6,35 @@
 #include "SakanX/Location.h"
 #include "SakanX/Apartment.h"
 #include "SakanX/SmartMatchAI.h"
+#include "SakanX/CLI.h"
+#include "TestSuites.h"
+
+
+
 
 int main() {
-    // TODO: [Mostafa Ahmed] needs to implement logic here to test the classes.
+
+
+    // TestSuites::testAggregation();
+    // TestSuites::testAI();
+    // TestSuites::testComposition();
+    // TestSuites::testDiamondProblem();
+    // TestSuites::testPersonLogic();
+    // TestSuites::testStudentLogic();
+    
+
+
+
+    CLI app;
+    app.run();
+
+
+
+    // $Person 
+    // $Admin read write 
+    // $DormSupervisor => create $Apartment => $Location 
+    // $Student ($SmartMatchAI) => Select 
+
+
     return 0;
 }

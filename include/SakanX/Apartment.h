@@ -61,7 +61,7 @@ private:
     vector<std::pair<std::string, int>> rooms; // vector of pair of < room type, number of these rooms> 
 
     int capacity; // how many can be living in this apartment
-    int currentTenants;
+    int currentTenants{0};
 
     int rentPrice;
 

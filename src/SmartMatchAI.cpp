@@ -1,6 +1,10 @@
 #include "SakanX/SmartMatchAI.h"
 
 double SmartMatchAI::calculateHarmony(const Student& s1, const Student& s2) {
+    // Validate input students
+    if (&s1 == nullptr || &s2 == nullptr) {
+        throw std::invalid_argument("Null student reference in calculateHarmony");
+    }
     if(s1.getGender() != s2.getGender()) return 0.0; // Different genders cannot be matched
     // Calculate harmony based on common tags and lifestyle compatibility
     double commonTags = 0.0;

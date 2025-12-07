@@ -11,5 +11,6 @@ public:
     Tag(int id, string name, int value);
     ~Tag();
     int getValue() const;
+    string getName() const;
 };
 #endif // TAG_H

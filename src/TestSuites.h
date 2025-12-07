@@ -52,7 +52,16 @@ public:
         cout << "------------------------------" << endl;
         Apartment* apt = new Apartment(Location("Building A", 3, 305, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
         cout << "Apartment created with Location: Building A, Floor 3, Room 305\n";
+        // Add some students for harmony calculation
+        Student* s1 = new Student("A", 1, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
+        Student* s2 = new Student("B", 2, 18, NationalityType::Egyptian, "", {}, 'm', "CS", 0.0);
+        apt->addStudent(s1);
+        apt->addStudent(s2);
+        int harmony = apt->totalHarmonyScore();
+        cout << "Total Harmony Score (2 students): " << harmony << endl;
         delete apt; // Should trigger Location destructor
+        delete s1;
+        delete s2;
         cout << "Result: \033[32mPASSED\033[0m (Check console for Location destructor msg)" << endl;
         cout << "==============================\n";
     }
@@ -66,6 +75,12 @@ public:
             Apartment apt(Location("B", 1, 1, PolulationType::Students, 0, 0, 0, 0, 0, 0, 0));
             apt.addStudent(s);
             cout << "Apartment created and student added. Apartment goes out of scope now.\n";
+            // Add another student for harmony calculation
+            Student* s2 = new Student("C", 2, 18, NationalityType::Egyptian, "", {}, 'm', "Eng", 0.0);
+            apt.addStudent(s2);
+            int harmony = apt.totalHarmonyScore();
+            cout << "Total Harmony Score (2 students): " << harmony << endl;
+            delete s2;
         }
         cout << "Checking if student still exists...\n";
         s->displayInfo(); // If this crashes, Aggregation failed

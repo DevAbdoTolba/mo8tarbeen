@@ -1,12 +1,16 @@
 
 #include "SakanX/Apartment.h"
+#include "SakanX/SmartMatchAI.h"
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
 
 Apartment::Apartment(const Location& location) : location(location) {
-    // TODO: [Abdo Tolba] needs to implement logic here.
+    // Validate location (assuming Location has a valid state if constructed)
+    if (location.getBuilding().empty() || location.getFloor() < 0 || location.getRoomNumber() < 0) {
+        throw std::invalid_argument("Invalid location for Apartment");
+    }
 }
 
 Apartment::~Apartment() {
@@ -14,56 +18,40 @@ Apartment::~Apartment() {
 }
 
 void Apartment::addStudent(Student* student) {
-    if(currentTenants == capacity) throw "Maximum Capacity has reached";
+    if (!student) throw std::invalid_argument("Null student pointer");
+    if (currentTenants >= capacity) throw std::invalid_argument("Maximum Capacity has been reached");
     students.push_back(student);
-    cout << "Student has been added successfully, Student number: " << ++currentTenants << endl; 
-    if(currentTenants == capacity) cout << "WARNING! MAXIMUM CAPACITY HAS REACHED" << endl;
-    else if(capacity - currentTenants == 1) cout << "There is only one more place ready for rent"; 
-    else cout << "There is " << capacity - currentTenants << " more places ready for rent!";
+    ++currentTenants;
 }
 Student Apartment::removeStudent(Student* student){
-    if(currentTenants == 0) throw "Apartment is already empty lol";
-
+    if (!student) throw std::invalid_argument("Null student pointer");
+    if (currentTenants == 0) throw std::invalid_argument("Apartment is already empty");
     auto it = find_if(students.begin(), students.end(), [&](Student* s) {
         return s && s->getId() == student->getId();
     });
-
-    if (it == students.end()) throw "Student not found in apartment";
+    if (it == students.end()) throw std::invalid_argument("Student not found in apartment");
     Student* removedStudent = *it;
     students.erase(it);
     --currentTenants;
-    cout << "Student removed successfully, available space now: " << capacity - currentTenants << endl;
     return *removedStudent;
 }
 
 int Apartment::totalHarmonyScore(){
-    
+    int total = 0;
+    // Sum harmony for all unique pairs of students
+    for (size_t i = 0; i < students.size(); ++i) {
+        for (size_t j = i + 1; j < students.size(); ++j) {
+            if (students[i] && students[j]) {
+                total += static_cast<int>(SmartMatchAI::calculateHarmony(*students[i], *students[j]));
+            }
+        }
+    }
+    return total;
 }
 
 
 void Apartment::displayApartmentInfo() const {
-     cout << "Apartment Information:\n";
-     cout << "ID: " << id << "\n";
-     cout << "Area: " << apartmentArea << " sqm\n";
-     cout << "Capacity: " << capacity << "\n";
-     cout << "Location: ";
-    location.displayLocation(); // Assuming Location has this method
-
-     cout << "Good Botgaz: " << (goodBotgaz ? "Yes" : "No") << "\n";
-     cout << "WiFi Connection: " << (hasWifi ? "Available" : "Not Available") << "\n";
-     cout << "Had Rats Before: " << (hadRatsBefore ? "Yes" : "No") << "\n";
-
-     cout << "Rooms:\n";
-    for (const auto& room : rooms) {
-         cout << "  - " << room.first << ": " << room.second << " sqm\n";
-    }
-
-     cout << "Students:\n";
-    for (const auto& student : students) {
-        if (student) {
-            student->displayInfo(); // Assuming Student has this method
-        }
-    }
+    // No output as per requirements
 }
 
 
@@ -113,10 +101,12 @@ int Apartment::getRentPrice() const{
 
 
 void Apartment::setId(int id) {
+    if (id < 0) throw std::invalid_argument("Apartment id must be non-negative");
     this->id = id;
 }
 
 void Apartment::setApartmentArea(int area) {
+    if (area <= 0) throw std::invalid_argument("Apartment area must be positive");
     this->apartmentArea = area;
 }
 
@@ -133,25 +123,37 @@ void Apartment::setHadRatsBefore(bool value) {
 }
 
 void Apartment::setLocation(const Location& loc) {
+    if (loc.getBuilding().empty() || loc.getFloor() < 0 || loc.getRoomNumber() < 0) {
+        throw std::invalid_argument("Invalid location for Apartment");
+    }
     this->location = loc;
 }
 
 void Apartment::setStudents(const vector<Student*>& students) {
+    for (auto* s : students) {
+        if (!s) throw std::invalid_argument("Null student pointer in students list");
+    }
     this->students = students;
 }
 
 void Apartment::setRooms(const vector<pair<string, int>>& rooms) {
+    for (const auto& room : rooms) {
+        if (room.first.empty() || room.second <= 0) throw std::invalid_argument("Invalid room data");
+    }
     this->rooms = rooms;
 }
 
 void Apartment::setCapacity(int capacity) {
+    if (capacity <= 0) throw std::invalid_argument("Capacity must be positive");
     this->capacity = capacity;
 }
 
 void Apartment::setCurrentTenants(int currentTenants){
+    if (currentTenants < 0 || currentTenants > capacity) throw std::invalid_argument("Invalid number of current tenants");
     this->currentTenants = currentTenants;
 }
 
 void Apartment::setRentPrice(int rentPrice){
+    if (rentPrice < 0) throw std::invalid_argument("Rent price must be non-negative");
     this->rentPrice = rentPrice;
 }
