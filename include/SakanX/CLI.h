@@ -36,6 +36,8 @@ private:
     void printLine() const;
     void waitForInput() const;
     void printProgressBar(double percentage) const; 
+    void printDashboardCard(const string& title, const string& value, const string& color) const;
+
 
     // --- Input Helpers (Robustness) ---
     int inputInt(const string& prompt);
@@ -61,6 +63,8 @@ private:
     void actionAddApartment();
     void actionAssignStudent();
     void actionApartmentDetails();
+    void actionShowStats();
+
 
     // Helper to find objects
     Student* selectStudent(const string& prompt);
@@ -68,6 +72,7 @@ private:
 
     // Seed Data
     void seedData();
+
 
 public:
     CLI();
