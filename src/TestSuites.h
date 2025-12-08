@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <vector>
 #include "SakanX/Person.h"
 #include "SakanX/Student.h"
 #include "SakanX/Admin.h"
@@ -42,6 +43,36 @@ public:
         DormSupervisor ds("Super", 999, "CS", "Housing");
         cout << "DormSupervisor created. Displaying info:\n";
         ds.displayInfo();
+        cout << "Result: \033[32mPASSED\033[0m" << endl;
+        cout << "==============================\n";
+    }
+
+    static void testDormSupervisorCapabilities() {
+        cout << "\n==============================\n";
+        cout << "[TEST] DormSupervisor Capabilities" << endl;
+        cout << "------------------------------" << endl;
+
+        DormSupervisor ds("Super", 999, "CS", "Housing");
+
+        Apartment apt(Location("Building C", 2, 201, PolulationType::Students, 10, 20, 30, 40, 1, 1, 2000));
+        apt.setCapacity(2);
+        apt.setRentPrice(2000);
+        apt.setGoodBotgaz(true);
+        apt.setHadRatsBefore(false);
+
+        Student s1("CapStudent1", 1, 20, NationalityType::Egyptian, "SSN1", {}, 'm', "CS", 0.5);
+        Student s2("CapStudent2", 2, 21, NationalityType::Egyptian, "SSN2", {}, 'm', "CS", 0.4);
+
+        ds.manage_apartment(&apt, &s1, nullptr, false);
+        ds.manage_apartment(&apt, &s2, &s1, true);
+
+        vector<Student*> roster = {&s2};
+        ds.enforce_dorm_rules(roster, "Lights-out after 11 PM");
+        ds.report_issues("Noise complaint", &apt);
+
+        bool access = ds.access_controls(&s2, "Room201");
+        cout << "Access granted? " << (access ? "YES" : "NO") << endl;
+
         cout << "Result: \033[32mPASSED\033[0m" << endl;
         cout << "==============================\n";
     }
