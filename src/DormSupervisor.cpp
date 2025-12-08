@@ -34,66 +34,6 @@ DormSupervisor::DormSupervisor(const string &name, int id, const string &ssn,
         }
 }
 
-int DormSupervisor::countEmptyApartments(const vector<Apartment *> &apartments) const
-{
-    int count = 0;
-    for (auto *apt : apartments)
-    {
-        if (apt->getCurrentTenants() == 0)
-            count++;
-    }
-    return count;
-}
-
-// Count of apartments that has students
-int DormSupervisor::countFullApartments(const vector<Apartment *> &apartments) const
-{
-    int count = 0;
-    for (auto *apt : apartments)
-    {
-        if (apt->getCurrentTenants() > 0)
-            count++;
-    }
-    return count;
-}
-
-// Find apartment by student
-Apartment *DormSupervisor::findApartmentByStudent(Student *student,
-                                                  const vector<Apartment *> &apartments) const
-{
-    if (student == nullptr)
-        return nullptr;
-
-    for (auto *apt : apartments)
-    {
-        vector<Student *> residents = apt->getStudents();
-        for (auto *resident : residents)
-        {
-            if (resident == student)
-                return apt;
-        }
-    }
-    return nullptr;
-}
-
-// Find cheapest apartment
-Apartment *DormSupervisor::findCheapestApartment(const vector<Apartment *> &apartments) const
-{
-    Apartment *cheapest = nullptr;
-    int minRent = 999999999;
-
-    for (auto *apt : apartments)
-    {
-        double rent = apt->getRentPrice();
-        if (rent < minRent)
-        {
-            minRent = rent;
-            cheapest = apt;
-        }
-    }
-    return cheapest;
-}
-
 
 HousingStats DormSupervisor::generateReport(const vector<Apartment *> &apartments) const {
     HousingStats stats = {0.0, 0.0, 0.0, 0, 0, 0, 0};
@@ -131,6 +71,51 @@ HousingStats DormSupervisor::generateReport(const vector<Apartment *> &apartment
 
 
 DormSupervisor::~DormSupervisor() {}
+
+void DormSupervisor::manage_apartment(Apartment* apartment, Student* toAssign, Student* toRemove, bool flagMaintenance) {
+    if (!apartment) throw std::invalid_argument("Apartment pointer cannot be null");
+
+    if (toAssign) {
+        Admin::assignStudentToApartment(toAssign, apartment);
+    }
+    if (toRemove) {
+        Admin::removeStudentFromApartment(toRemove, apartment);
+    }
+
+    if (flagMaintenance) {
+        apartment->setHadRatsBefore(true);
+    }
+}
+
+void DormSupervisor::enforce_dorm_rules(const vector<Student*>& students, const string& rule) const {
+    if (rule.empty()) throw std::invalid_argument("Rule must be provided for enforcement");
+    for (auto* s : students) {
+        if (!s) continue;
+        std::cout << "[ENFORCE] Rule: " << rule << " | Student: " << s->getName() << std::endl;
+    }
+}
+
+void DormSupervisor::report_issues(const string& issue, Apartment* apartment) const {
+    if (issue.empty()) throw std::invalid_argument("Issue description cannot be empty");
+    std::cout << "[REPORT] From DormSupervisor: " << issue;
+    if (apartment) {
+        std::cout << " | Apartment ID: " << apartment->getId();
+    }
+    std::cout << std::endl;
+}
+
+bool DormSupervisor::access_controls(const Student* requester, const string& resource) const {
+    if (!requester) return false;
+    if (resource.empty()) return false;
+
+    bool hasAdminScope = true; // DormSupervisor inherits Admin
+    bool sameNationality = requester->getNationality() == this->getNationality();
+    bool genderAligned = requester->getGender() == this->getGender();
+
+    if (hasAdminScope) return true;
+    if (genderAligned && sameNationality) return true;
+    return false;
+}
 
 void DormSupervisor::displayInfo() const
 {

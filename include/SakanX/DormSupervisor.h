@@ -5,6 +5,7 @@
 #include "Admin.h"
 #include "Apartment.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -30,11 +31,13 @@ public:
                    NationalityType nationality, const string &major,
                    const string &department,
                    const vector<pair<string, string>> &contacts);
-    int countEmptyApartments(const vector<Apartment *> &apartments) const;
-    int countFullApartments(const vector<Apartment *> &apartments) const;
-    Apartment *findApartmentByStudent(Student *student, const vector<Apartment *> &apartments) const;
-    Apartment *findCheapestApartment(const vector<Apartment *> &apartments) const;
     HousingStats generateReport(const vector<Apartment *> &apartments) const;
+
+    // Dorm Supervisor specific capabilities
+    void manage_apartment(Apartment* apartment, Student* toAssign = nullptr, Student* toRemove = nullptr, bool flagMaintenance = false);
+    void enforce_dorm_rules(const vector<Student*>& students, const string& rule) const;
+    void report_issues(const string& issue, Apartment* apartment = nullptr) const;
+    bool access_controls(const Student* requester, const string& resource) const;
   
     ~DormSupervisor();
 
