@@ -6,8 +6,11 @@ Sakan-X is a comprehensive student housing management system designed to streaml
 
 ## Team Members
 
-- Ahmed Fathi
-- Mostafa Ahmed
-- Mostafa Merzk
-- Abdo Tolba
-- Ahmed Samir
+- [@Ahmed Fathi](https://github.com/AhmeedFatehy)
+- [@Mostafa Ahmed](https://github.com/MostafaAhmed22)
+- [@Mostafa Merzk](https://github.com/mostafamerzk)
+- [@Abdo Tolba](https://github.com/DevAbdoTolba)
+- [@Ahmed Samir](https://github.com/AhmedSamirKhalaf)
+
+Supervised by:
+[Eng. @Hassan Eldash](https://github.com/hassaneldash)
